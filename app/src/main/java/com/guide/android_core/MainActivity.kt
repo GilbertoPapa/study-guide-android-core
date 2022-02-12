@@ -1,29 +1,20 @@
 package com.guide.android_core
 
-import android.R.attr
 import android.content.Intent
-import android.database.Cursor
-import android.graphics.BitmapFactory
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
-import com.guide.android_core.databinding.ActivityBlurImageBinding
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.guide.android_core.databinding.ActivityMainBinding
-import android.R.attr.bitmap
-
-import android.R.attr.data
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var btn_image : Button
-    private lateinit var launcher: ActivityResultLauncher<String>
+    private val viewModel: BlurViewModel by viewModels { BlurViewModelFactory(application) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,13 +26,7 @@ class MainActivity : AppCompatActivity() {
             abreGaleria()
         }
 
-        launcher = registerForActivityResult(ActivityResultContracts.GetContent()){
-            enviandoImagem(it)
-        }
-
-    }
-
-    private fun enviandoImagem(it: Uri?) {
+        binding.btnGo.setOnClickListener{ viewModel.aplicarBlur(nivelBlur) }
 
     }
 
@@ -61,4 +46,13 @@ class MainActivity : AppCompatActivity() {
             binding.imageView.setImageBitmap(bitmap)
         }
     }
+
+    private val nivelBlur: Int
+        get() =
+            when (binding.optionGroup.checkedRadioButtonId) {
+                R.id.option_blur_1 -> 1
+                R.id.option_blur_2 -> 2
+                R.id.option_blur_3 -> 3
+                else -> 1
+            }
 }
