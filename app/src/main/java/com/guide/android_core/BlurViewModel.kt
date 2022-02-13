@@ -1,17 +1,35 @@
 package com.guide.android_core
 
 import android.app.Application
+import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
+import androidx.work.*
 import com.guide.android_core.workers.BlurWorker
 
 class BlurViewModel(aplicacao: Application) : ViewModel() {
+    internal lateinit var outputUri: Uri
+    internal lateinit var uriImagemSelecionada: Uri
+    internal var imagemUri: Uri? = null
     private val workManager = WorkManager.getInstance(aplicacao)
 
+
     internal fun aplicarBlur(nivelBlur: Int) {
-        workManager.enqueue(OneTimeWorkRequest.from(BlurWorker::class.java))
+        val blurRequest = OneTimeWorkRequestBuilder<BlurWorker>()
+            .setInputData(criandoEntradaDadosDeUri())
+            .build()
+
+        workManager.enqueue(blurRequest)
+
+    }
+
+    private fun criandoEntradaDadosDeUri() : Data {
+        val construtor = Data.Builder()
+        imagemUri?.let {
+            construtor.putString(KEY_IMAGE_URI, imagemUri.toString())
+        }
+        return construtor.build()
     }
 }
 

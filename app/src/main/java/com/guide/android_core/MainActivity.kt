@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         if (resultCode == RESULT_OK && requestCode == 0){
             val source = ImageDecoder.createSource(this.contentResolver, valor?.data!!)
             val bitmap : Bitmap  = ImageDecoder.decodeBitmap(source)
+            viewModel.imagemUri = valor?.data!!
 
             binding.imageView.setImageBitmap(bitmap)
         }

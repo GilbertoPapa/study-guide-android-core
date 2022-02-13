@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">study-guide-android-core</string>
+    <!-- Titles -->
+    <string name="blur_title">Selecione o blur</string>
+
+    <!-- Buttons -->
+    <string name="select_image">Selecione a imagem</string>
+    <string name="go">Enviar</string>
+    <string name="see_file">Ver Foto</string>
+
+    <!-- Content descriptions -->
+    <string name="description_image">A imagem com o blur e salva.</string>
+
+    <!-- Blur levels -->
+    <string name="blur_lv_1">Pouco Blur</string>
+    <string name="blur_lv_2">Medio Blur</string>
+    <string name="blur_lv_3">Muito Blur</string>
+    <string name="cancel_work">Cancelar Trabalho</string>
+
+    <!-- Messages -->
+    <string name="set_permissions_in_settings">Vá para configurações -> Aplicativos e Notificação ->
+        WorkManager Demo -> Permissões do app e garanta o acesso para o Storage.</string>
 </resources>
